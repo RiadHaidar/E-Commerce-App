@@ -5,8 +5,8 @@ import 'package:shoppingapp/components/shared_values.dart';
 import 'package:shoppingapp/network/local/cacheHelper.dart';
 import 'package:shoppingapp/screens/Moduls/shopLayout.dart';
 import '../components/components.dart';
-import '../cubit/shopCubit/shopLoginCubit.dart';
-import '../cubit/shopCubit/shopLoginStates.dart';
+import '../cubit/shopLoginCubit/shopLoginCubit.dart';
+import '../cubit/shopLoginCubit/shopLoginStates.dart';
 
 class LoginScreen extends StatelessWidget {
   TextEditingController emailEditingController = TextEditingController();
