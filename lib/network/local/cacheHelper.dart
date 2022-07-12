@@ -13,7 +13,7 @@ class CacheHelper{
   
   }
 
-  static void put(String key, dynamic value){
+  static void putData(String key, dynamic value){
 if(value is bool) sharedPreferences.setBool(key, value); 
 if(value is String) sharedPreferences.setString(key, value);
 if(value is double) sharedPreferences.setDouble(key, value);
@@ -23,7 +23,7 @@ if(value is int) sharedPreferences.setInt(key, value);
 
  }
 
- static  get(String key ){
+ static  getData(String key ){
    return sharedPreferences.get(key);
   }
 

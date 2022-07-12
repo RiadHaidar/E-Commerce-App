@@ -5,8 +5,8 @@ import 'package:shoppingapp/components/shared_values.dart';
 import 'package:shoppingapp/network/local/cacheHelper.dart';
 import 'package:shoppingapp/screens/Moduls/shopLayout.dart';
 import '../components/components.dart';
-import '../cubit/shopLoginCubit/shopLoginCubit.dart';
-import '../cubit/shopLoginCubit/shopLoginStates.dart';
+import '../cubit/loginCubit/shopLoginCubit.dart';
+import '../cubit/loginCubit/shopLoginStates.dart';
 
 class LoginScreen extends StatelessWidget {
   TextEditingController emailEditingController = TextEditingController();
@@ -24,6 +24,9 @@ class LoginScreen extends StatelessWidget {
               backGroundColor: Colors.green);
             //  CacheHelper.put('isLoggedIn', true);
             navigateTo(context, ShopLayout());
+
+            CacheHelper.putData('token',
+             state.loginModel.data.token);
         } else {
           showToast(
               message: state.loginModel.message,

@@ -2,8 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoppingapp/cubit/shopLoginCubit/shopLoginStates.dart';
+import 'package:shoppingapp/cubit/loginCubit/shopLoginStates.dart';
 import 'package:shoppingapp/models/loginModel.dart';
+import 'package:shoppingapp/network/local/cacheHelper.dart';
 import 'package:shoppingapp/network/remote/dioHelper.dart';
 
 import '../../network/endPoints.dart';
@@ -35,6 +36,8 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
     ).then((value) {
     
     loginModel = LoginModel.fromJson(value.data);
+
+    
       // print(value.data!);
       // print(loginModel.status);
             // print(loginModel.message);

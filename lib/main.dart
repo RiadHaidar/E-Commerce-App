@@ -6,13 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/components/components.dart';
 import 'package:shoppingapp/components/shared_values.dart';
+import 'package:shoppingapp/cubit/shopCubit/shopCubit.dart';
 import 'package:shoppingapp/network/local/cacheHelper.dart';
 import 'package:shoppingapp/network/remote/dioHelper.dart';
 import 'package:shoppingapp/screens/loginScreen.dart';
 import 'package:shoppingapp/screens/onBoardingScreen.dart';
 
 import 'cubit/blocObserver.dart';
-import 'cubit/shopLoginCubit/shopLoginCubit.dart';
+import 'cubit/loginCubit/shopLoginCubit.dart';
 
 void main() {
   BlocOverrides.runZoned(
@@ -50,6 +51,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
   providers: [
     BlocProvider(create: (context) =>ShopLoginCubit()),
+
+    BlocProvider(create: (context)=> ShopCubit()),
   ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

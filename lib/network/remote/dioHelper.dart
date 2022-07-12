@@ -33,7 +33,7 @@ class DioHelper {
 
  static Future<Response> getData({
     required String path,
-    required Map<dynamic, dynamic> data,
+     Map<dynamic, dynamic>? data,
     Map<String, dynamic>? query,
     String? token,
   }) async {
