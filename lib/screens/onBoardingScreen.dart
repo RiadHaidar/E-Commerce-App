@@ -39,9 +39,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     ),
   ];
 
+dynamic currentIndex = 0;
   void changeIndex(index){
-
-    boardingScreens[index];
+currentIndex = index;
+   // boardingScreens[index];
   }
   @override
   Widget build(BuildContext context) {
@@ -84,17 +85,25 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  if(currentIndex!=0)
                   TextButton(
                       onPressed: () {
 
                          controller.previousPage(
                             duration:
                              Duration(milliseconds: 400),
-                            curve: Curves.easeIn);
+                            curve: Curves.easeIn).then((value){
+                              setState(() {
+                              changeIndex(controller.page);
+                              });
+                            });
                       },
                       child: Text(
                         'Previous',
-                        style: TextStyle(color: Color(0xff363B64)),
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff363B64)),
                       )),
                   SmoothPageIndicator(
                     controller: controller,
@@ -110,18 +119,29 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     if(controller.page == 2){
  navigateTo(context, LoginScreen());
 }else{
+
                          controller.nextPage(
+
                             duration:
                              Duration(milliseconds: 400),
-                            curve: Curves.easeOut);
+                            curve: Curves.easeOut).then((value) {
+                            setState(() {
+                                                              print(controller.page);
+print(controller.page!.toInt());
+                              changeIndex(controller.page!.toInt());
+                                                              print(controller.page);
+
+                            });
+                            });
 
 }
                     },
                     child: Text(
                       'Next',
                       style: TextStyle(
-                        color: Color(0xff363B64),
-                      ),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff363B64)),
                     ),
                   ),
                 ],

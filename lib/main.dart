@@ -9,6 +9,7 @@ import 'package:shoppingapp/components/shared_values.dart';
 import 'package:shoppingapp/cubit/shopCubit/shopCubit.dart';
 import 'package:shoppingapp/network/local/cacheHelper.dart';
 import 'package:shoppingapp/network/remote/dioHelper.dart';
+import 'package:shoppingapp/screens/Moduls/shopLayout.dart';
 import 'package:shoppingapp/screens/loginScreen.dart';
 import 'package:shoppingapp/screens/onBoardingScreen.dart';
 
@@ -17,20 +18,26 @@ import 'cubit/loginCubit/shopLoginCubit.dart';
 
 void main() {
   BlocOverrides.runZoned(
-    ()async {
-
+    () async {
       WidgetsFlutterBinding.ensureInitialized();
-   await   CacheHelper.init();
+      await CacheHelper.init();
       DioHelper.inti();
-
-// bool checkFirstScreen = CacheHelper.get('isLoggedIn');
-
-// Widget isScreen;
+      
+//      String checkFirstScreen = CacheHelper.getData(userToken);
+     
+// Widget firstScreen;
 // if(checkFirstScreen){
 // isScreen = ShopLayout();
 // }else{
 //   isScreen = OnBoardingScreen();
 // }
+
+// if(checkFirstScreen.isNotEmpty)
+
+// {
+
+//firstScreen = ShopLayout();
+//}
 
       runApp(MyApp());
     },
@@ -39,41 +46,39 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-
 // Widget? FirstScreen;
 // MyApp(this.FirstScreen);
 // static const PrimaryColor =  Color(0xff0DD7DF);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-
+    //final textTheme = Theme.of(context).textTheme;
+Color primary = Color(0xFF2F4D7D);
     return MultiBlocProvider(
-  providers: [
-    BlocProvider(create: (context) =>ShopLoginCubit()),
-
-    BlocProvider(create: (context)=> ShopCubit()),
-  ],
+      providers: [
+        BlocProvider(create: (context) => ShopLoginCubit(),),
+        BlocProvider(create: (context) => ShopCubit()..getHomeData()..getCategoriesData(),),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(  
-         primarySwatch: myColor,
-          scaffoldBackgroundColor: Color(0xffDCEEF8),
-     //    primarySwatch: Colors.blue,
-        //   textTheme: GoogleFonts.notoSansTextTheme(textTheme).copyWith(
-        // bodyText1: GoogleFonts.notoSans(textStyle: textTheme.bodyText1),
-      appBarTheme: AppBarTheme(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-              systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Color(0xffDCEEF8),
+        theme: ThemeData(
+         // primarySwatch: myColor,
+          scaffoldBackgroundColor: Color(0xffDBF0F8),
+          primarySwatch:  generateMaterialColor(primary),
+          fontFamily:GoogleFonts.roboto() .fontFamily ,
+    // textTheme: TextTheme(),
+          // bodyText1: GoogleFonts.notoSans(textStyle: textTheme.bodyText1),
+          appBarTheme: AppBarTheme(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            // systemOverlayStyle: SystemUiOverlayStyle(
+            //   statusBarColor: Color(0xffDCEEF8),
+            // ),
+            iconTheme: IconThemeData(
+              color: Colors.grey[800],
+            ),
           ),
-        iconTheme: IconThemeData(color: Colors.grey[800],),),
-      ),
-    
-    
-    
-        
+        ),
         home: OnBoardingScreen(),
       ),
     );

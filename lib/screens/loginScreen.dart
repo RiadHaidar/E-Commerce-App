@@ -33,6 +33,12 @@ class LoginScreen extends StatelessWidget {
                backGroundColor: Colors.red);
         }
       }
+
+
+      if(state is ShopErrorLoginState){
+        showToast(message: 'Check Your Internet Connection', 
+        backGroundColor: Color.fromARGB(255, 143, 143, 33));
+      }
     }, builder: (context, state) {
       return Scaffold(
         appBar: AppBar( 
