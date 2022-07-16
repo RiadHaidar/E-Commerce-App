@@ -11,3 +11,13 @@ class ShopCategoriesSuccessState extends ShopStates{}
 class ShopCategoriesErrorState extends ShopStates{}
 
 class ShopHomeChangeScreen extends ShopStates{}
+
+class ShopCartLoadingState extends ShopStates{}
+class ShopCartSuccessState extends ShopStates{}
+class ShopCartErrorState extends ShopStates{}
+
+
+class ShopAddToCartLoadingState extends ShopStates{}
+class ShopAddToCartSuccessState extends ShopStates{}
+class ShopAddToCartErrorState extends ShopStates{}
+

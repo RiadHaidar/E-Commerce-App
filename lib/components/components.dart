@@ -182,14 +182,14 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            CustomizedGirdView(ShopCubit.get(context).homeModel.homeData),
+            CustomizedGirdView(ShopCubit.get(context).homeModel.homeData,context),
           ]),
     );
   }
 }
 
 
-Widget CustomizedGirdView(HomeData homeData) => Expanded(
+Widget CustomizedGirdView(HomeData homeData,context) => Expanded(
                         child: GridView.count(
                             childAspectRatio: 1.35 / 1.58,
                             shrinkWrap: true,
@@ -199,7 +199,8 @@ Widget CustomizedGirdView(HomeData homeData) => Expanded(
                             //  physics: NeverScrollableScrollPhysics(),
                             children:List.generate(
                               homeData.products.length,
-                             (index) => buildItem(homeData.products[index]))
+                             (index) => buildItem(homeData.products[index],
+                             context))
                             
                             ,),
                       );
@@ -209,84 +210,94 @@ Widget CustomizedTextWidget(
         required Color? fontColor,
         required FontWeight fontWeight}) =>
     Text(
+     // softWrap:true,
+     textAlign: TextAlign.center,
+     overflow: TextOverflow.ellipsis,
+     maxLines:2,
       title,
       style: TextStyle(
+        
           fontWeight: fontWeight, fontSize: fontSize, color: fontColor),
     );
 
-Widget buildItem(Products products) => Padding(
+Widget buildItem(Products products,context) => Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        // width: 150,
-
-        // height: 180,
-
-        //color: Colors.white,
-
-        decoration: BoxDecoration(boxShadow: [
-          BoxShadow(
-            color: Colors.grey,
-
-            offset: Offset(0.0, 1.0), //(x,y)
-
-            blurRadius: 6.0,
-          ),
-        ], color: Colors.white, borderRadius: BorderRadius.circular(22)),
-
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
- //    crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  RichText(
-                    text: TextSpan(
-                      text: '\$',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                       color: defaultLightBlue),
-                      children:  <TextSpan>[
-                        TextSpan(
-                          text: products.price.toString(),
-                          style: TextStyle(
-                                           fontWeight: FontWeight.bold,
-                            color:defaultDarkBlue, fontSize: 16),
-                        ),
-
-                        // TextSpan(text: ' world!'),
-                      ],
+      child: GestureDetector(
+        onLongPress: () {
+          ShopCubit.get(context).addItemToCart(products.id);
+        },
+        child: Container(
+          // width: 150,
+      
+          // height: 180,
+      
+          //color: Colors.white,
+      
+          decoration: BoxDecoration(boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+      
+              offset: Offset(0.0, 1.0), //(x,y)
+      
+              blurRadius: 6.0,
+            ),
+          ], color: Colors.white, borderRadius: BorderRadius.circular(22)),
+      
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+       //    crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        text: '\$',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                         color: defaultLightBlue),
+                        children:  <TextSpan>[
+                          TextSpan(
+                            text: products.price.toString(),
+                            style: TextStyle(
+                                             fontWeight: FontWeight.bold,
+                              color:defaultDarkBlue, fontSize: 16),
+                          ),
+      
+                          // TextSpan(text: ' world!'),
+                        ],
+                      ),
                     ),
-                  ),
-                  GestureDetector(
-                    child: Icon(
-                      Icons.favorite_border,
-                      color: Colors.redAccent,
-                    ),
-                  )
-                ],
-              ),
-      //        SizedBox(height: 5,),
-              Image(
-//width: 100,
-height: 100,
-                fit: BoxFit.contain,
-                image: NetworkImage(
-                            products.image)              ),
-              Text(
-
-products.name,
-textAlign: TextAlign.center,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 15,
-              fontWeight: FontWeight.bold,
-              color: defaultDarkBlue),
-              )
-            ],
+                    GestureDetector(
+                      child: Icon(
+                        Icons.favorite_border,
+                        color: Colors.redAccent,
+                      ),
+                    )
+                  ],
+                ),
+        //        SizedBox(height: 5,),
+                Image(
+      //width: 100,
+      height: 100,
+                  fit: BoxFit.contain,
+                  image: NetworkImage(
+                              products.image)              ),
+                Text(
+      
+      products.name,
+      textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: defaultDarkBlue),
+                )
+              ],
+            ),
           ),
         ),
       ),

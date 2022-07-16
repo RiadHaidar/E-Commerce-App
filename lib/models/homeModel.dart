@@ -21,6 +21,7 @@ class HomeData {
 }
 
 class Products {
+  late int id;
   late dynamic price;
   late dynamic oldPrice;
   late dynamic discount;
@@ -31,6 +32,7 @@ class Products {
   late bool inFavorite;
   late bool inCart;
   Products.fromJson(Map<String, dynamic> json) {
+    id=json['id'];
     price = json['price'];
     oldPrice = json['old_price'];
     discount = json['discount'];

@@ -57,7 +57,7 @@ Color primary = Color(0xFF2F4D7D);
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => ShopLoginCubit(),),
-        BlocProvider(create: (context) => ShopCubit()..getHomeData()..getCategoriesData(),),
+        BlocProvider(create: (context) => ShopCubit()..getHomeData()..getCategoriesData()..getCart(),),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
