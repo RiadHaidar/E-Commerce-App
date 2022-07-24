@@ -47,6 +47,44 @@ class DioHelper {
       path,
       queryParameters: query,
     );
+
+  }
+
+
+  static Future<Response> putData ({
+    required String path,
+    Map<String,dynamic> ?data,
+    Map<String,dynamic> ?query,
+    
+    String ?token
+  })async
+  {
+    dio.options.headers =
+    {
+       'lang': 'en',
+      'Content-Type':'application/json',
+      'Authorization' : '$token'
+    };
+    return await dio.put(
+      path,
+      data: data,
+      queryParameters: query,
+    );
+  }
+
+  static Future<Response> deleteData ({
+    required String path,
+    
+    String ?token
+  })async
+  {
+    dio.options.headers =
+    {
+      'lang': 'en',
+      'Content-Type':'application/json',
+      'Authorization' : '$token'
+    };
+    return await dio.delete(path);
   }
 }
 

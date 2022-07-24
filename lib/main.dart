@@ -1,9 +1,6 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shoppingapp/components/components.dart';
 import 'package:shoppingapp/components/shared_values.dart';
 import 'package:shoppingapp/cubit/shopCubit/shopCubit.dart';
@@ -12,7 +9,6 @@ import 'package:shoppingapp/network/remote/dioHelper.dart';
 import 'package:shoppingapp/screens/Moduls/shopLayout.dart';
 import 'package:shoppingapp/screens/loginScreen.dart';
 import 'package:shoppingapp/screens/onBoardingScreen.dart';
-
 import 'cubit/blocObserver.dart';
 import 'cubit/loginCubit/shopLoginCubit.dart';
 
@@ -23,33 +19,28 @@ void main() {
       await CacheHelper.init();
       DioHelper.inti();
       
-//      String checkFirstScreen = CacheHelper.getData(userToken);
-     
-// Widget firstScreen;
-// if(checkFirstScreen){
-// isScreen = ShopLayout();
-// }else{
-//   isScreen = OnBoardingScreen();
-// }
+Widget widget;
 
-// if(checkFirstScreen.isNotEmpty)
+ bool? showOnBoard = CacheHelper.getData('ShowOnBoard');
 
-// {
 
-//firstScreen = ShopLayout();
-//}
-
-      runApp(MyApp());
+  if(showOnBoard == false) {
+    if (userToken != null)
+      widget = ShopLayout();
+    else
+      widget = LoginScreen();
+  }
+  else
+    widget = OnBoardingScreen();
+      runApp(MyApp(widget));
     },
     blocObserver: MyBlocObserver(),
   );
 }
 
 class MyApp extends StatelessWidget {
-// Widget? FirstScreen;
-// MyApp(this.FirstScreen);
-// static const PrimaryColor =  Color(0xff0DD7DF);
-  // This widget is the root of your application.
+late final Widget startWidget;
+MyApp(this.startWidget);
   @override
   Widget build(BuildContext context) {
     //final textTheme = Theme.of(context).textTheme;
@@ -57,13 +48,13 @@ Color primary = Color(0xFF2F4D7D);
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => ShopLoginCubit(),),
-        BlocProvider(create: (context) => ShopCubit()..getHomeData()..getCategoriesData()..getCart(),),
+        BlocProvider(create: (context) => ShopCubit()..getHomeData()..getCategoriesData()..getCart()..getFavorite()..getProfileData(),),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
          // primarySwatch: myColor,
-          scaffoldBackgroundColor: Color(0xffDBF0F8),
+          scaffoldBackgroundColor:defaultBackgroundColor ,
           primarySwatch:  generateMaterialColor(primary),
           fontFamily:GoogleFonts.roboto() .fontFamily ,
     // textTheme: TextTheme(),
@@ -79,7 +70,7 @@ Color primary = Color(0xFF2F4D7D);
             ),
           ),
         ),
-        home: OnBoardingScreen(),
+        home: startWidget,
       ),
     );
   }

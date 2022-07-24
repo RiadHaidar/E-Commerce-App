@@ -4,6 +4,8 @@ import 'package:shoppingapp/components/components.dart';
 import 'package:shoppingapp/screens/loginScreen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../network/local/cacheHelper.dart';
+
 class boardingModel {
   late String title;
   late String subTitle;
@@ -23,34 +25,34 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   List<boardingModel> boardingScreens = [
     boardingModel(
       title: 'Purchase Items Online',
-      subTitle:'Select and memorize your fufute purchases with smart online shopping cart',
-
+      subTitle:
+          'Select and memorize your fufute purchases with smart online shopping cart',
       image: 'images/on1.png',
     ),
     boardingModel(
       title: 'Sales and Gifts',
-      subTitle:
-'Holiday sales, Birthday gifts, Various choices and catagories',      image: 'images/on2.png',
+      subTitle: 'Holiday sales, Birthday gifts, Various choices and catagories',
+      image: 'images/on2.png',
     ),
     boardingModel(
       title: 'Client Review',
-      subTitle:
-'Honest feedback from our clients, Happy Clients- Happy ys',      image: 'images/on3.png',
+      subTitle: 'Honest feedback from our clients, Happy Clients- Happy ys',
+      image: 'images/on3.png',
     ),
   ];
 
-dynamic currentIndex = 0;
-  void changeIndex(index){
-currentIndex = index;
-   // boardingScreens[index];
+  dynamic currentIndex = 0;
+  void changeIndex(index) {
+    currentIndex = index;
+    // boardingScreens[index];
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
       padding: const EdgeInsets.all(10.0),
       child: Column(
-       
         children: [
           Expanded(
             child: PageView.builder(
@@ -67,6 +69,8 @@ currentIndex = index;
                     BoxDecoration(borderRadius: BorderRadius.circular(20)),
                 child: ElevatedButton(
                   onPressed: () {
+                                CacheHelper.putData('ShowOnBoard', false);
+                            
                     navigateTo(context, LoginScreen());
                   },
                   child: Text(
@@ -85,26 +89,26 @@ currentIndex = index;
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  if(currentIndex!=0)
-                  TextButton(
-                      onPressed: () {
-
-                         controller.previousPage(
-                            duration:
-                             Duration(milliseconds: 400),
-                            curve: Curves.easeIn).then((value){
-                              setState(() {
+                  if (currentIndex != 0)
+                    TextButton(
+                        onPressed: () {
+                          controller
+                              .previousPage(
+                                  duration: Duration(milliseconds: 400),
+                                  curve: Curves.easeIn)
+                              .then((value) {
+                            setState(() {
                               changeIndex(controller.page);
-                              });
                             });
-                      },
-                      child: Text(
-                        'Previous',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff363B64)),
-                      )),
+                          });
+                        },
+                        child: Text(
+                          'Previous',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff363B64)),
+                        )),
                   SmoothPageIndicator(
                     controller: controller,
                     count: boardingScreens.length,
@@ -116,25 +120,24 @@ currentIndex = index;
                   ),
                   TextButton(
                     onPressed: () {
-                    if(controller.page == 2){
- navigateTo(context, LoginScreen());
-}else{
+                      if (controller.page == 2) {
+                                CacheHelper.putData('ShowOnBoard', false);
 
-                         controller.nextPage(
-
-                            duration:
-                             Duration(milliseconds: 400),
-                            curve: Curves.easeOut).then((value) {
-                            setState(() {
-                                                              print(controller.page);
-print(controller.page!.toInt());
-                              changeIndex(controller.page!.toInt());
-                                                              print(controller.page);
-
-                            });
-                            });
-
-}
+                        navigateTo(context, LoginScreen());
+                      } else {
+                        controller
+                            .nextPage(
+                                duration: Duration(milliseconds: 400),
+                                curve: Curves.easeOut)
+                            .then((value) {
+                          setState(() {
+                            print(controller.page);
+                            print(controller.page!.toInt());
+                            changeIndex(controller.page!.toInt());
+                            print(controller.page);
+                          });
+                        });
+                      }
                     },
                     child: Text(
                       'Next',
@@ -154,39 +157,33 @@ print(controller.page!.toInt());
   }
 }
 
-Widget onBoardingScreenBuilder(boardingModel bModel) => Column(
-       mainAxisAlignment: MainAxisAlignment.center,
-       
-        children: [
-          
-            Flexible(
-              child: Image(
-               fit: BoxFit.cover,
-                height: 300,
-                image: AssetImage('${bModel.image}'),
-              ),
-            ),
-           SizedBox(
-            height: 15,
-          ),
-      
-         Text(
-              bModel.title,
-                 textAlign: TextAlign.center,
-              style: GoogleFonts.notoSans(
-                  color: Color(0xff363B64),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24),
-            ),
-          SizedBox(
-            height: 15,
-          ),
-          Text(
-            bModel.subTitle,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.notoSans(
-                fontSize: 18,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w300),
-          ),
-        ]);
+Widget onBoardingScreenBuilder(boardingModel bModel) =>
+    Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Flexible(
+        child: Image(
+          fit: BoxFit.cover,
+          height: 300,
+          image: AssetImage('${bModel.image}'),
+        ),
+      ),
+      SizedBox(
+        height: 15,
+      ),
+      Text(
+        bModel.title,
+        textAlign: TextAlign.center,
+        style: GoogleFonts.notoSans(
+            color: Color(0xff363B64),
+            fontWeight: FontWeight.bold,
+            fontSize: 24),
+      ),
+      SizedBox(
+        height: 15,
+      ),
+      Text(
+        bModel.subTitle,
+        textAlign: TextAlign.center,
+        style: GoogleFonts.notoSans(
+            fontSize: 18, color: Colors.grey[600], fontWeight: FontWeight.w300),
+      ),
+    ]);

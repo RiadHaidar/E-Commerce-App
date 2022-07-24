@@ -1,12 +1,12 @@
 class addToCartModel {
  late bool status;
- late String message;
+
  late Data data;
 
   addToCartModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    message = json['message'];
-    data = (json['data'] != null ? new Data.fromJson(json['data']) : null)!;
+  
+    data = (json['data'] != null ?  Data.fromJson(json['data']) : null)!;
   }
 
  
@@ -23,20 +23,20 @@ late Product product;
     id = json['id'];
     quantity = json['quantity'];
     product =
-        (json['product'] != null ? new Product.fromJson(json['product']) : null)!;
+        (json['product'] != null ?  Product.fromJson(json['product']) : null)!;
   }
 
   
 }
 
 class Product {
-late int id;
-late int price;
-late int oldPrice;
-late int discount;
-late String image;
-late String name;
-late String description;
+late dynamic id;
+late dynamic price;
+late dynamic oldPrice;
+late dynamic discount;
+late dynamic image;
+late dynamic name;
+late dynamic description;
 
  
   Product.fromJson(Map<String, dynamic> json) {

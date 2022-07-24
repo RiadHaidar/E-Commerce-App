@@ -15,7 +15,9 @@ dependencies:
   smooth_page_indicator: ^1.0.0+2
   cupertino_icons: ^1.0.2
   hexcolor: ^2.0.7
+  flutter_slidable: ^2.0.0
   flutter_bloc: ^8.0.1
+  font_awesome_flutter: ^10.1.0
   bloc: ^8.0.3
   dio: ^4.0.6
   conditional_builder_null_safety: ^0.0.6
@@ -23,6 +25,7 @@ dependencies:
   carousel_slider: ^4.1.1
   flutter_conditional_rendering: ^2.0.0
   shared_preferences: ^2.0.15
+  shrink_sidemenu: ^2.0.0+2-null-safety
 
 
 dev_dependencies:
